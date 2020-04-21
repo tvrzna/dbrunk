@@ -1,8 +1,19 @@
 # dbrunk
+[![javadoc](https://javadoc.io/badge2/cz.tvrzna/dbrunk/0.1.0/javadoc.svg)](https://javadoc.io/doc/cz.tvrzna/dbrunk/0.1.0)
+
 Minimal and simple file database.
 
 ## What is dbrunk good for?
 Simple and minimalistic NoSQL database, that stores entities to file and provides basic CRUD operations.
+
+## Installation
+```xml
+<dependency>
+    <groupId>cz.tvrzna</groupId>
+    <artifactId>dbrunk</artifactId>
+    <version>0.1.0</version>
+</dependency>
+```
 
 ## Using Database interface
 
