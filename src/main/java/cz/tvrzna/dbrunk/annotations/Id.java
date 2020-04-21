@@ -10,6 +10,7 @@ import java.lang.annotation.Target;
 /**
  * This annotation defines Id member of database entity class.
  *
+ * @since 0.1.0
  * @author michalt
  */
 @Documented

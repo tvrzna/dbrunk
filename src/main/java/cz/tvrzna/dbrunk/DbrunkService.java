@@ -21,6 +21,11 @@ import cz.tvrzna.dbrunk.repositories.ResultWrapper;
 import cz.tvrzna.dbrunk.utils.DbrunkType;
 import cz.tvrzna.dbrunk.utils.Reflections;
 
+/**
+ * The Class DbrunkService.
+ *
+ * @author michalt
+ */
 public class DbrunkService
 {
 	private static final int MIN_COUNTER_VALUE = 0;
@@ -34,6 +39,11 @@ public class DbrunkService
 	private Database db;
 	private boolean autocommit = true;
 
+	/**
+	 * Gets the single instance of DbrunkService.
+	 *
+	 * @return single instance of DbrunkService
+	 */
 	public static DbrunkService getInstance()
 	{
 		if (instance == null)
@@ -43,6 +53,16 @@ public class DbrunkService
 		return instance;
 	}
 
+	/**
+	 * Inits the dbrunk service.
+	 *
+	 * @param dbType
+	 *          the db type
+	 * @param filePath
+	 *          the file path
+	 * @throws DbrunkInitException
+	 *           the dbrunk init exception
+	 */
 	public void init(DbrunkType dbType, String filePath) throws DbrunkInitException
 	{
 		if (db == null)
@@ -73,6 +93,17 @@ public class DbrunkService
 		}
 	}
 
+	/**
+	 * Saves entity into Database.
+	 *
+	 * @param <T>
+	 *          the generic type
+	 * @param clazz
+	 *          the clazz
+	 * @param entity
+	 *          the entity
+	 * @return the t
+	 */
 	public <T extends AbstractEntity> T save(Class<T> clazz, T entity)
 	{
 		ResultWrapper<T> result = new ResultWrapper<>();
@@ -88,6 +119,17 @@ public class DbrunkService
 		return result.getValue();
 	}
 
+	/**
+	 * Finds entity by <code>id</code>.
+	 *
+	 * @param <T>
+	 *          the generic type
+	 * @param clazz
+	 *          the clazz
+	 * @param id
+	 *          the id
+	 * @return the t
+	 */
 	public <T extends AbstractEntity> T find(Class<T> clazz, Long id)
 	{
 		ResultWrapper<T> result = new ResultWrapper<>();
@@ -95,6 +137,15 @@ public class DbrunkService
 		return result.getValue();
 	}
 
+	/**
+	 * Finds all entities by class.
+	 *
+	 * @param <T>
+	 *          the generic type
+	 * @param clazz
+	 *          the clazz
+	 * @return the list
+	 */
 	public <T extends AbstractEntity> List<T> findAll(Class<T> clazz)
 	{
 		List<T> result = new ArrayList<>();
@@ -102,21 +153,52 @@ public class DbrunkService
 		return result;
 	}
 
+	/**
+	 * Removes the entity by <code>id</code>.
+	 *
+	 * @param <T>
+	 *          the generic type
+	 * @param clazz
+	 *          the clazz
+	 * @param id
+	 *          the id
+	 */
 	public <T extends AbstractEntity> void remove(Class<T> clazz, Long id)
 	{
 		dbOperation(clazz, map -> map.remove(id), false);
 	}
 
+	/**
+	 * Removes the entity by reference.
+	 *
+	 * @param <T>
+	 *          the generic type
+	 * @param clazz
+	 *          the clazz
+	 * @param entity
+	 *          the entity
+	 */
 	public <T extends AbstractEntity> void remove(Class<T> clazz, T entity)
 	{
 		dbOperation(clazz, map -> map.remove(getEntityId(entity)), false);
 	}
 
+	/**
+	 * Removes all entities defined by class.
+	 *
+	 * @param <T>
+	 *          the generic type
+	 * @param clazz
+	 *          the clazz
+	 */
 	public <T extends AbstractEntity> void removeAll(Class<T> clazz)
 	{
 		dbOperation(clazz, map -> map.clear(), false);
 	}
 
+	/**
+	 * Performs commit operation on database.
+	 */
 	public void commit()
 	{
 		try
@@ -129,16 +211,41 @@ public class DbrunkService
 		}
 	}
 
+	/**
+	 * Checks, if is autocommit.
+	 *
+	 * @return true, if is autocommit
+	 */
 	public boolean isAutocommit()
 	{
 		return autocommit;
 	}
 
+	/**
+	 * Sets the autocommit.
+	 *
+	 * @param autocommit
+	 *          the new autocommit
+	 */
 	public void setAutocommit(boolean autocommit)
 	{
 		this.autocommit = autocommit;
 	}
 
+	/**
+	 * Db operation.
+	 *
+	 * @param <T>
+	 *          the generic type
+	 * @param clazz
+	 *          the clazz
+	 * @param function
+	 *          the function
+	 * @param readOnly
+	 *          the read only
+	 * @throws DbrunkDbException
+	 *           the dbrunk db exception
+	 */
 	private <T extends AbstractEntity> void dbOperation(Class<T> clazz, Consumer<DbConcurrentMap<T>> function, boolean readOnly) throws DbrunkDbException
 	{
 		try
@@ -172,6 +279,15 @@ public class DbrunkService
 		}
 	}
 
+	/**
+	 * Gets the entity id.
+	 *
+	 * @param <T>
+	 *          the generic type
+	 * @param object
+	 *          the object
+	 * @return the entity id
+	 */
 	private <T extends AbstractEntity> Long getEntityId(T object)
 	{
 		Field[] fields = Reflections.findAnnotatedFields(object, Id.class);
@@ -194,6 +310,16 @@ public class DbrunkService
 		return null;
 	}
 
+	/**
+	 * Sets the entity id.
+	 *
+	 * @param <T>
+	 *          the generic type
+	 * @param object
+	 *          the object
+	 * @param id
+	 *          the id
+	 */
 	private <T extends AbstractEntity> void setEntityId(T object, Long id)
 	{
 		Field[] fields = Reflections.findAnnotatedFields(object, Id.class);
@@ -215,6 +341,11 @@ public class DbrunkService
 		}
 	}
 
+	/**
+	 * Generate id.
+	 *
+	 * @return the long
+	 */
 	private synchronized Long generateId()
 	{
 		if (rotateCounter >= MAX_COUNTER_VALUE)

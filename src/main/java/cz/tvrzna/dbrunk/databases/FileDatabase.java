@@ -13,11 +13,25 @@ import java.util.concurrent.ConcurrentMap;
 import cz.tvrzna.dbrunk.Database;
 import cz.tvrzna.dbrunk.DbConcurrentMap;
 
+/**
+ * Implementation of {@link Database}, that stores all data into specified file.
+ *
+ * @author michalt
+ * @since 0.1.0
+ */
 public class FileDatabase implements Database
 {
 	private RandomAccessFile raf;
 	private ConcurrentMap<String, DbConcurrentMap<?>> database;
 
+	/**
+	 * Instantiates a new file database.
+	 *
+	 * @param filePath
+	 *          the file path
+	 * @throws IOException
+	 *           Signals that an I/O exception has occurred.
+	 */
 	@SuppressWarnings("unchecked")
 	public FileDatabase(String filePath) throws IOException
 	{
@@ -48,6 +62,12 @@ public class FileDatabase implements Database
 		bais.close();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see cz.tvrzna.dbrunk.Database#createOrOpen(java.lang.String,
+	 * java.lang.Class)
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> DbConcurrentMap<T> createOrOpen(String tableName, Class<T> clazz)
@@ -55,12 +75,22 @@ public class FileDatabase implements Database
 		return (DbConcurrentMap<T>) database.computeIfAbsent(tableName, (k) -> new DbConcurrentMap<>(clazz));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see cz.tvrzna.dbrunk.Database#drop(java.lang.String)
+	 */
 	@Override
 	public void drop(String tableName)
 	{
 		database.remove(tableName);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see cz.tvrzna.dbrunk.Database#commit()
+	 */
 	@Override
 	public void commit() throws IOException
 	{
@@ -75,6 +105,11 @@ public class FileDatabase implements Database
 		baos.close();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see cz.tvrzna.dbrunk.Database#close()
+	 */
 	@Override
 	public void close() throws IOException
 	{
