@@ -1,5 +1,5 @@
 # dbrunk
-[![javadoc](https://javadoc.io/badge2/cz.tvrzna/dbrunk/0.1.0/javadoc.svg)](https://javadoc.io/doc/cz.tvrzna/dbrunk/0.1.0)
+[![javadoc](https://javadoc.io/badge2/cz.tvrzna/dbrunk/0.1.1/javadoc.svg)](https://javadoc.io/doc/cz.tvrzna/dbrunk/0.1.1)
 
 Minimal and simple file database.
 
@@ -11,7 +11,7 @@ Simple and minimalistic NoSQL database, that stores entities to file and provide
 <dependency>
     <groupId>cz.tvrzna</groupId>
     <artifactId>dbrunk</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
 </dependency>
 ```
 

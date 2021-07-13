@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>cz.tvrzna</groupId>
 	<artifactId>dbrunk</artifactId>
-	<version>0.1.0</version>
+	<version>0.1.1</version>
 
 	<name>dbrunk</name>
 	<description>Minimal and simple file database</description>
