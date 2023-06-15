@@ -63,6 +63,16 @@ public abstract class AbstractRepository<T extends AbstractEntity> implements Se
 	}
 
 	/**
+	 * Gets the dbrunk service.
+	 *
+	 * @return the dbrunk service
+	 */
+	protected DbrunkService getDbrunkService()
+	{
+		return this.databaseService;
+	}
+
+	/**
 	 * Creates or updates entity.
 	 *
 	 * @param entity
@@ -71,7 +81,7 @@ public abstract class AbstractRepository<T extends AbstractEntity> implements Se
 	 */
 	public T save(T entity)
 	{
-		return databaseService.save(clazz, entity);
+		return getDbrunkService().save(clazz, entity);
 	}
 
 	/**
@@ -83,7 +93,7 @@ public abstract class AbstractRepository<T extends AbstractEntity> implements Se
 	 */
 	public T find(Long id)
 	{
-		return databaseService.find(clazz, id);
+		return getDbrunkService().find(clazz, id);
 	}
 
 	/**
@@ -93,7 +103,7 @@ public abstract class AbstractRepository<T extends AbstractEntity> implements Se
 	 */
 	public List<T> findAll()
 	{
-		return databaseService.findAll(clazz);
+		return getDbrunkService().findAll(clazz);
 	}
 
 	/**
@@ -104,7 +114,7 @@ public abstract class AbstractRepository<T extends AbstractEntity> implements Se
 	 */
 	public void remove(Long id)
 	{
-		databaseService.remove(clazz, id);
+		getDbrunkService().remove(clazz, id);
 	}
 
 	/**
@@ -115,7 +125,7 @@ public abstract class AbstractRepository<T extends AbstractEntity> implements Se
 	 */
 	public void remove(T entity)
 	{
-		databaseService.remove(clazz, entity);
+		getDbrunkService().remove(clazz, entity);
 	}
 
 	/**
@@ -123,7 +133,7 @@ public abstract class AbstractRepository<T extends AbstractEntity> implements Se
 	 */
 	public void removeAll()
 	{
-		databaseService.removeAll(clazz);
+		getDbrunkService().removeAll(clazz);
 	}
 
 }
